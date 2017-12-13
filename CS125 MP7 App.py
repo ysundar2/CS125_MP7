@@ -5,6 +5,7 @@ import dash_html_components as html
 from praw.models import MoreComments
 import praw #import the reddit wrapper class
 from collections import Counter
+
 def redditDataExtractor(postID):
     reddit = praw.Reddit(user_agent='Comment Extraction (by /u/USERNAME)',
                      client_id='MzP2Nwj9ntK6UQ', client_secret="pc7UJvP9yEgrKzJHXDHiBE3rIP4",
@@ -45,6 +46,7 @@ colors = {
     'background': '#111111', #Making JSON to customize the HTML element of the script.
     'text': '#7FDBFF'
 }
+
 def updateGraph(id): #Function to graph qith the requested post ID.
     redditData = redditDataExtractor(id)
     return {
@@ -59,7 +61,9 @@ def updateGraph(id): #Function to graph qith the requested post ID.
                 }
             }
         }
+
 app.title = 'Reddit scraper'
+
 app.layout = html.Div(children=[
     html.Title(children="Reddit Scraper"),
     html.Nav(className='navbar navbar-default'),
@@ -79,9 +83,11 @@ app.layout = html.Div(children=[
     dcc.Graph(id='output-state')
 
 ],className='container')
+
  #Callbacks work as a part of the dash interface. This is what runs when we want to update the 'state' of the graph.
 @app.callback (Output('output-state', 'figure'),
               [Input('submit-button', 'n_clicks')],[State('id-state','value')])
+
 def update_output(n_clicks, id):
     return updateGraph(id)
 
